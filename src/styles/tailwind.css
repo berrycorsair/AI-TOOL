@@ -29,7 +29,6 @@
   --color-dark: #080504;
 
   /* Replacing purple system with warm gold  */
-
   --color-purple: #c98a45;
   --color-purple-dark: #9a5f2d;
   --color-purple-dark-2: #6f3f1e;
@@ -38,7 +37,6 @@
   --color-purple-light-3: #f7deb7;
   --color-purple-light-4: #f9ead7;
   --color-purple-light-5: #fff6ec;
-
 
   /* Replace pink with amber rust accents */
   --color-pink: #d98b3a;
@@ -564,7 +562,9 @@
   }
 
   body {
-    @apply text-dark-3 bg-dark;
+    @apply text-white;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #e67e22 100%);
+    background-attachment: fixed;
   }
 
   button:not(:disabled),
@@ -707,4 +707,30 @@ textarea {
 
 .generated-content-container p {
   @apply mt-2
+}
+
+/* Global readability improvements for blue-orange background */
+body {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+a:not(.nav-gradient):not(.button-border-gradient):not(.button-gradient-hover) {
+  @apply text-white/80 hover:text-white transition-colors duration-200;
+}
+
+/* Improve card & section backgrounds */
+section, .card, .features-box, .pricing-item, .blog-card {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+/* Ensure form inputs are readable */
+input, textarea, select {
+  @apply bg-black/30 text-white border border-white/20 rounded-lg px-4 py-2;
+}
+
+input::placeholder, textarea::placeholder {
+  @apply text-white/50;
 }

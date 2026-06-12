@@ -1,19 +1,15 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../../../public/images/logo/logo.svg";
 import DropDown from "./DropDown";
 import menuData from "./menuData";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
-
   const { data: session } = useSession();
-
   const pathUrl = usePathname();
 
   // Sticky menu
@@ -27,7 +23,7 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleStickyMenu);
-  });
+  }, []);
 
   return (
     <>
@@ -40,8 +36,16 @@ const Header = () => {
       >
         <div className="relative mx-auto max-w-[1170px] items-center justify-between px-4 sm:px-8 lg:flex xl:px-0">
           <div className="flex w-full items-center justify-between lg:w-1/4">
-            <Link href="/">
-              <Image src={logo} alt="Logo" width={164} height={36} />
+            {/* Logo with square + name */}
+            <Link href="/" className="flex items-center gap-2">
+              {/* Square icon with initials */}
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 shadow-md">
+                <span className="text-sm font-bold text-white">MB</span>
+              </div>
+              {/* Full name */}
+              <span className="text-lg font-semibold text-white">
+                Matthew Berry
+              </span>
             </Link>
 
             <button
@@ -133,13 +137,13 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <Link
+                  {/* <Link
                     href="/auth/signin"
                     className="text-sm text-white hover:text-opacity-75"
                   >
                     Sign In
-                  </Link>
-                  <Link
+                  </Link> */}
+                  {/* <Link
                     href="/auth/signup"
                     className="button-border-gradient hover:button-gradient-hover relative flex items-center gap-1.5 rounded-lg px-4.5 py-2 text-sm text-white shadow-button hover:shadow-none"
                   >
@@ -157,7 +161,7 @@ const Header = () => {
                         fill="white"
                       />
                     </svg>
-                  </Link>
+                  </Link> */}
                 </>
               )}
             </div>

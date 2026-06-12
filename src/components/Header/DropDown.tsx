@@ -1,70 +1,65 @@
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu } from "@/types/menu";
 
-const DropDown = ({ menuItem }: { menuItem: Menu }) => {
-  const [dropdownToggler, setDropdownToggler] = useState(false);
+const DropDown = ({ menuItem }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
   const pathUrl = usePathname();
-  return (
-    <>
-      {menuItem.title !== "Pages" ? (
-        <Link
-          onClick={() => setDropdownToggler(!dropdownToggler)}
-          className={`hover:nav-gradient relative flex items-center justify-between gap-3 border border-transparent px-4 py-1.5 text-sm hover:text-white ${
-            pathUrl === menuItem.path
-              ? "nav-gradient text-white"
-              : "text-white/80"
-          }`}
-          href={`${menuItem.path ? menuItem.path : ""}`}
-        >
-          {menuItem.title}
-          <span>
-            <svg
-              className="h-3 w-3 cursor-pointer fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
-            </svg>
-          </span>
-        </Link>
-      ) : (
-        <button
-          onClick={() => setDropdownToggler(!dropdownToggler)}
-          className={`hover:nav-gradient relative flex items-center justify-between gap-3 border border-transparent px-4 py-1.5 text-sm hover:text-white ${
-            pathUrl === menuItem.path
-              ? "nav-gradient text-white"
-              : "text-white/80"
-          }`}
-        >
-          {menuItem.title}
-          <span>
-            <svg
-              className="h-3 w-3 cursor-pointer fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
-            </svg>
-          </span>
-        </button>
-      )}
 
-      <ul className={`dropdown ${dropdownToggler ? "flex" : ""}`}>
-        {menuItem?.submenu &&
-          menuItem?.submenu.map((item, key) => (
-            <li key={key}>
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <button
+        className={`hover:nav-gradient relative border border-transparent px-4 py-1.5 text-sm transition-all duration-300 ${
+          pathUrl === menuItem.path
+            ? "nav-gradient text-white"
+            : "text-white/80 hover:text-white"
+        }`}
+      >
+        {menuItem.title}
+        <svg
+          className={`ml-1 inline-block transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 9L12 15L18 9"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <ul className="absolute left-0 mt-2 w-48 rounded-lg bg-dark/90 backdrop-blur-md border border-white/10 shadow-xl z-50 py-2">
+          {menuItem.submenu.map((subItem: any, idx: number) => (
+            <li key={idx}>
               <Link
-                href={item.path || "#"}
-                className="flex rounded-md px-4 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white"
+                href={subItem.path}
+                className={`block px-4 py-2 text-sm transition-colors duration-200 ${
+                  pathUrl === subItem.path
+                    ? "bg-white/10 text-white"
+                    : "text-white/70 hover:bg-white/10 hover:text-white"
+                }`}
               >
-                {item.title}
+                {subItem.title}
               </Link>
             </li>
           ))}
-      </ul>
-    </>
+        </ul>
+      )}
+    </div>
   );
 };
 
