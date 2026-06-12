@@ -1,41 +1,34 @@
-import { useState } from "react";
+'use client';
 
-type Props = {
+interface OptionsProps {
+  values: (string | number)[];
   title: string;
   name: string;
-  values: any[];
-  handleChange: (e: any) => void;
-  selected: string;
-};
+  selected: string | number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
 
-const Options = ({ title, name, values, handleChange, selected }: Props) => {
-  const [isSelected, setIsSelected] = useState(false);
+export default function Options({ values, title, name, selected, handleChange }: OptionsProps) {
   return (
-    <div className="flex flex-col pt-5">
-      <label htmlFor={name} className="pb-4">
+    <div className="mt-4">
+      <label htmlFor={name} className="pb-4 block">
         {title}
       </label>
       <select
-        value={selected}
-        name={name}
-        onChange={(e) => {
-          handleChange(e);
-          setIsSelected(true);
-        }}
         id={name}
-        className={`rounded-lg border border-white/[0.12] bg-dark-7 py-3 pl-5 outline-hidden focus:border-purple ${
-          isSelected && "text-white"
-        }`}
+        name={name}
+        value={selected}
+        onChange={handleChange}
+        className="w-full rounded-lg border border-white/[0.12] bg-dark-7 px-5 py-3 text-white outline-hidden focus:border-purple"
+        required
       >
-        <option value="Select Option">Select option</option>
-        {values.map((value, key) => (
-          <option value={value} key={key}>
+        <option value="">Select option</option>
+        {values.map((value) => (
+          <option key={value} value={value}>
             {value}
           </option>
         ))}
       </select>
     </div>
   );
-};
-
-export default Options;
+}

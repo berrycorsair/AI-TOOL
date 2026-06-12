@@ -6,15 +6,17 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Ignore specific warnings
+  output: 'standalone',
+  images: {
+    unoptimized: true,
+  },
+  turbopack: {},
   webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
+    // Add alias for next-auth to mock version
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'next-auth/react': require.resolve('./src/mock/next-auth/react.ts'),
+    };
     return config;
   },
 }

@@ -1,23 +1,14 @@
-import React from "react";
+'use client';
 
-import { Metadata } from "next";
-import Breadcrumb from "@/components/Breadcrumb";
-import ResetPassword from "@/components/Auth/ResetPassword";
-
-export const metadata: Metadata = {
-  title: "Reset Password | AI Tool - Next.js Template for AI Tools",
-  description: "This is Reset Password page for AI Tool",
-  // other metadata
-};
-
-const ResetPasswordPage = async (props: { params: Promise<{ token: string }> }) => {
-  const params = await props.params;
+export default function ResetPasswordPage() {
   return (
-    <>
-      <Breadcrumb pageTitle="Reset Password" />
-      <ResetPassword token={params.token!} />
-    </>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold mb-4">Reset Password</h1>
+        <p className="text-gray-600">
+          This feature is currently disabled. Please contact support for assistance.
+        </p>
+      </div>
+    </div>
   );
-};
-
-export default ResetPasswordPage;
+}
