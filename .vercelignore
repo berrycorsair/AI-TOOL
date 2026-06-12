@@ -1,0 +1,7 @@
+.git
+.github
+README.md
+.eslintrc.json
+.prettierrc
+node_modules/.cache
+.next/cache
