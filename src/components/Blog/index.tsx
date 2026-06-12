@@ -1,7 +1,13 @@
-import { getPosts } from "@/sanity/sanity-utils";
 import { Blog } from "@/types/blog";
 import SectionTitle from "../Common/SectionTitle";
 import SingleBlog from "./SingleBlog";
+
+// Mock function to get posts (replace with your actual data source)
+async function getPosts() {
+  // TODO: Replace with your actual data fetching (API, database, local files, etc.)
+  // This is a temporary mock implementation returning an empty array
+  return [];
+}
 
 export default async function BlogSection() {
   const posts = await getPosts();

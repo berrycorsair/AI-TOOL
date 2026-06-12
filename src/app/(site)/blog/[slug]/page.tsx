@@ -1,10 +1,43 @@
 import Breadcrumb from '@/components/Breadcrumb';
-import { getPost, imageBuilder } from '@/sanity/sanity-utils';
-import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { RelatedArticles } from './_components/related-articles';
 import { SharePost } from './_components/share-post';
+
+// Mock function to get post (replace with your actual data source)
+async function getPost(slug: string) {
+  // TODO: Replace with your actual data fetching (API, database, etc.)
+  // This is a temporary mock implementation
+  return null;
+}
+
+// Mock image builder function (replace with your actual image URL builder)
+function imageBuilder(image: any) {
+  return {
+    url: () => {
+      // Return a placeholder image URL or actual image URL from your data source
+      return '/images/placeholder.jpg';
+    }
+  };
+}
+
+// Simple PortableText replacement component
+function PortableText({ value }: { value: any[] }) {
+  if (!value || value.length === 0) {
+    return <p>No content available</p>;
+  }
+  
+  return (
+    <div>
+      {value.map((block: any, index: number) => {
+        if (block._type === 'block') {
+          return <p key={index}>{block.children?.map((child: any) => child.text).join('')}</p>;
+        }
+        return null;
+      })}
+    </div>
+  );
+}
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -77,6 +110,17 @@ export default async function BlogDetails(props: Props) {
   const { slug } = params;
   const post = await getPost(slug);
 
+  if (!post) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
+          <p>The blog post you're looking for doesn't exist.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Breadcrumb pageTitle='Blog Details' />
@@ -94,7 +138,7 @@ export default async function BlogDetails(props: Props) {
           <div className='mx-auto max-w-[870px]'>
             <div className='mb-7.5 flex flex-wrap items-center justify-between gap-5'>
               <div className='flex flex-wrap items-center gap-2.5'>
-                {post?.tags?.map((tag) => (
+                {post?.tags?.map((tag: string) => (
                   <span
                     key={tag}
                     className='cursor-pointer rounded-full border border-white/10 bg-white/[0.07] px-2.5 py-[3px] text-xs font-medium duration-300 ease-out hover:border-white/25 hover:text-white'
@@ -148,11 +192,13 @@ export default async function BlogDetails(props: Props) {
                   </svg>
 
                   <span className='text-sm font-medium'>
-                    {new Date(post?.publishedAt!)
-                      .toDateString()
-                      .split(' ')
-                      .slice(1)
-                      .join(' ')}
+                    {post?.publishedAt
+                      ? new Date(post.publishedAt)
+                          .toDateString()
+                          .split(' ')
+                          .slice(1)
+                          .join(' ')
+                      : 'Date not available'}
                   </span>
                 </div>
               </div>

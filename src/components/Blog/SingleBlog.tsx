@@ -1,7 +1,19 @@
-import { imageBuilder } from "@/sanity/sanity-utils";
 import { Blog } from "@/types/blog";
 import Image from "next/image";
 import Link from "next/link";
+
+// Mock image builder function (replace with your actual image URL logic)
+function imageBuilder(image: any) {
+  return {
+    url: () => {
+      // Return a placeholder image URL or actual image URL from your data source
+      if (image && image.url) {
+        return image.url;
+      }
+      return '/images/placeholder.jpg';
+    }
+  };
+}
 
 const SingleBlog = ({ blog }: { blog: Blog }) => {
   const { title, mainImage, slug, metadata, author, tags, publishedAt } = blog;
@@ -30,7 +42,7 @@ const SingleBlog = ({ blog }: { blog: Blog }) => {
 
       <h3>
         <Link
-          href={`/blog/${slug.current}`}
+          href={`/blog/${slug?.current || slug}`}
           className='line-clamp-2 text-xl font-semibold text-white duration-300 ease-in hover:opacity-80'
         >
           <span className='absolute inset-0' aria-hidden></span>
@@ -60,7 +72,7 @@ const SingleBlog = ({ blog }: { blog: Blog }) => {
           </svg>
 
           <Link
-            href={`/blog/author/${author?.slug?.current}`}
+            href={`/blog/author/${author?.slug?.current || author?.slug}`}
             className='text-sm font-medium'
           >
             {author?.name}

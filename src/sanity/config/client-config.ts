@@ -1,9 +1,7 @@
-const config = {
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID as string,
-  dataset: "production",
-  apiVersion: "2023-06-19",
-  token: process.env.SNITY_API_KEY as string,
-  useCdn: false,
-};
+// Sanity configuration has been removed
+// This file is no longer needed since Sanity is not being used
 
-export default config;
+// TODO: If you need configuration for another service, add it here
+// or delete this file entirely
+
+export default {};

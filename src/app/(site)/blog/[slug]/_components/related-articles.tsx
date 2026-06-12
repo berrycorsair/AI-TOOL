@@ -1,5 +1,11 @@
 import SingleBlog from '@/components/Blog/SingleBlog';
-import { getPosts } from '@/sanity/sanity-utils';
+
+// Mock function to get posts (replace with your actual data source)
+async function getPosts() {
+  // TODO: Replace with your actual data fetching (API, database, etc.)
+  // This is a temporary mock implementation
+  return [];
+}
 
 export async function RelatedArticles() {
   const posts = await getPosts();

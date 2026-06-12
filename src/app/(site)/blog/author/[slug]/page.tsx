@@ -1,8 +1,13 @@
 import BlogGridContainer from "@/components/Blog/BlogGridContainer";
 import Breadcrumb from "@/components/Breadcrumb";
-import { getPostsByAuthor } from "@/sanity/sanity-utils";
-import { Author } from "@/types/blog";
 import React from "react";
+
+// Mock function to get posts by author (replace with your actual data source)
+async function getPostsByAuthor(slug: string) {
+  // TODO: Replace with your actual data fetching (API, database, etc.)
+  // This is a temporary mock implementation
+  return [];
+}
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -11,7 +16,6 @@ type Props = {
 export async function generateMetadata(props: Props) {
   const params = await props.params;
   const { slug } = params;
-  const posts = await getPostsByAuthor(slug);
 
   return {
     title: `Author: ${slug} | Blog`,
@@ -21,13 +25,10 @@ export async function generateMetadata(props: Props) {
 
 const AuthorPage = async (props: Props) => {
   const params = await props.params;
-
-  const {
-    slug
-  } = params;
+  const { slug } = params;
 
   const posts = await getPostsByAuthor(slug);
-  const author: any = posts[0]?.author || "Author";
+  const author: any = posts[0]?.author || { name: "Author" };
 
   return (
     <>
