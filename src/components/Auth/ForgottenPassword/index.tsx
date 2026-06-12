@@ -1,9 +1,9 @@
 'use client';
-export default function ResetPassword() {
+export default function ForgottenPassword() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-4">Reset Password</h1>
+        <h1 className="text-2xl font-bold mb-4">Forgot Password</h1>
         <p className="text-gray-600">Password reset is currently disabled.</p>
       </div>
     </div>
